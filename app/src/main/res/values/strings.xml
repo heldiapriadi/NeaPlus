@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NeaPlus</string>
+    <string name="title_home">Home</string>
+    <string name="title_bookmark">Bookmark</string>
+</resources>
