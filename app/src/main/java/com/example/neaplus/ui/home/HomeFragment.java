@@ -13,7 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.neaplus.R;
+import com.example.neaplus.core.usecase.BookmarkViewModel;
 import com.example.neaplus.core.usecase.HomeViewModel;
 import com.example.neaplus.databinding.FragmentHomeBinding;
 import com.example.neaplus.core.model.Articles;
@@ -33,19 +38,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private JsonPlaceHolderApi jsonPlaceHolderApi;
     private TextView textViewResult;
+    private HomeViewModel homeViewModel;
+    private HomeListAdapter adapterNews;
+    private RecyclerView recyclerViewNews;
+    ArrayList<Articles> articleArrayList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        textViewResult = binding.textViewResult;
+//        textViewResult = binding.textViewResult;
         final TextView textView = binding.textNews;
 
         final Spinner spinner = binding.spinnerCountry;
@@ -53,28 +59,22 @@ public class HomeFragment extends Fragment {
         Item.add("ID");
         Item.add("EN");
 
+
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(getActivity().getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, Item);
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setSelection(0);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
+
+        recyclerViewNews = binding.listRecyclerView;
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel.getAllNews().observe(getViewLifecycleOwner(), news -> {
+            // Update the cached copy of the words in the adapter.
+            List<Articles> newsArticles = news.getArticles();
+            articleArrayList.addAll(newsArticles);
+            adapterNews.notifyDataSetChanged();
         });
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://newsapi.org/v2/")
-                .addConverterFactory(GsonConverterFactory.create())
-//                .client(okHttpClient)
-                .build();
-
-        jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-
-        getNews();
-
+        setupRecyclerView();
         return root;
     }
 
@@ -83,54 +83,15 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
-    private void getNews(){
-        Map<String, String> parameters = new HashMap<>();
-
-        parameters.put("country","id");
-        parameters.put("category","business");
-        parameters.put("apiKey","a038ee0f2c8d4665bd21853c6b634cf8");
-
-        Call<News> call = jsonPlaceHolderApi.getPosts(parameters);
-
-        call.enqueue(new Callback<News>() {
-            @Override
-            public void onResponse(Call<News> call, Response<News> response) {
-                if(!response.isSuccessful()){
-                    textViewResult.setText("Code: " + response.code());
-                    return;
-                }
-
-                News newsList = response.body();
-                String content = "";
-                String article = "";
-                content += "Status: " + newsList.getStatus() + "\n";
-                content += "TotalResults: " + newsList.getTotalResults() + "\n";
-                content += "Article [ \n";
-                content += "\t Sources [ \n";
-                textViewResult.append(content);
-                List<Articles> articlesList = newsList.getArticles();
-                    for(Articles articles : articlesList){
-                        article += "\t \t id : " + articles.getSource().getId() + "\n";
-                        article += "\t \t name : " + articles.getSource().getName() + "\n";
-                        article += "\t ] \n";
-                        article += "\t author : " + articles.getAuthor() + "\n";
-                        article += "\t title : " + articles.getTitle() + "\n";
-                        article += "\t description : " + articles.getDescription() + "\n";
-                        article += "\t url : " + articles.getUrl() + "\n";
-                        article += "\t urlToImage : " + articles.getUlrToImage() + "\n";
-                        article += "\t publishedAt : " + articles.getPublishedAt() + "\n";
-                        article += "\t content : " + articles.getContent() + "\n";
-
-                        textViewResult.append(article);
-                    }
-            }
-
-            @Override
-            public void onFailure(Call<News> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-            }
-        });
+    private void setupRecyclerView() {
+        if (adapterNews == null) {
+            adapterNews = new HomeListAdapter(this.getActivity(), articleArrayList, new HomeListAdapter.NewsDiff());
+            recyclerViewNews.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerViewNews.setAdapter(adapterNews);
+            recyclerViewNews.setItemAnimator(new DefaultItemAnimator());
+        } else {
+            adapterNews.notifyDataSetChanged();
+        }
     }
 
 }

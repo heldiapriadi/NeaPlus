@@ -79,39 +79,72 @@ public class MainActivity extends AppCompatActivity {
             onsearch = false;
         }
     }
-    public void click1(View view){
-        findViewById(R.id.button1).setBackgroundColor(Color.RED);
-        findViewById(R.id.button2).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button3).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button4).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button5).setBackgroundColor(Color.WHITE);
+    public void business_click(View view){
+        findViewById(R.id.business_button).setBackgroundColor(Color.RED);
+        findViewById(R.id.entertainment_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.general_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.health_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.science_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.sports_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.technology_button).setBackgroundColor(Color.WHITE);
     }
-    public void click2(View view){
-        findViewById(R.id.button1).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button2).setBackgroundColor(Color.RED);
-        findViewById(R.id.button3).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button4).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button5).setBackgroundColor(Color.WHITE);
+    public void entertainment_click(View view){
+        findViewById(R.id.business_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.entertainment_button).setBackgroundColor(Color.RED);
+        findViewById(R.id.general_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.health_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.science_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.sports_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.technology_button).setBackgroundColor(Color.WHITE);
     }
-    public void click3(View view){
-        findViewById(R.id.button1).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button2).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button3).setBackgroundColor(Color.RED);
-        findViewById(R.id.button4).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button5).setBackgroundColor(Color.WHITE);
+
+    public void general_click(View view){
+        findViewById(R.id.business_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.entertainment_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.general_button).setBackgroundColor(Color.RED);
+        findViewById(R.id.health_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.science_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.sports_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.technology_button).setBackgroundColor(Color.WHITE);
     }
-    public void click4(View view){
-        findViewById(R.id.button1).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button2).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button3).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button4).setBackgroundColor(Color.RED);
-        findViewById(R.id.button5).setBackgroundColor(Color.WHITE);
+
+    public void health_click(View view){
+        findViewById(R.id.business_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.entertainment_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.general_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.health_button).setBackgroundColor(Color.RED);
+        findViewById(R.id.science_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.sports_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.technology_button).setBackgroundColor(Color.WHITE);
     }
-    public void click5(View view){
-        findViewById(R.id.button1).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button2).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button3).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button4).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.button5).setBackgroundColor(Color.RED);
+
+    public void science_click(View view){
+        findViewById(R.id.business_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.entertainment_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.general_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.health_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.science_button).setBackgroundColor(Color.RED);
+        findViewById(R.id.sports_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.technology_button).setBackgroundColor(Color.WHITE);
+    }
+
+    public void sports_click(View view){
+        findViewById(R.id.business_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.entertainment_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.general_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.health_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.science_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.sports_button).setBackgroundColor(Color.RED);
+        findViewById(R.id.technology_button).setBackgroundColor(Color.WHITE);
+    }
+
+    public void technology_click(View view){
+        findViewById(R.id.business_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.entertainment_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.general_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.health_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.science_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.sports_button).setBackgroundColor(Color.WHITE);
+        findViewById(R.id.technology_button).setBackgroundColor(Color.RED);
     }
 }

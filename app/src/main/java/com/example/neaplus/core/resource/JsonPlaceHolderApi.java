@@ -10,5 +10,5 @@ import retrofit2.http.QueryMap;
 
 public interface JsonPlaceHolderApi {
     @GET("top-headlines")
-    Call<News> getPosts(@QueryMap Map<String, String> parameters);
+    Call<News> getNews(@QueryMap Map<String, String> parameters);
 }
