@@ -12,8 +12,13 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.neaplus.core.model.Articles;
 import com.example.neaplus.core.model.News;
+import com.example.neaplus.ui.DetailActivity;
+import com.example.neaplus.ui.MainActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeListAdapter extends ListAdapter<News, HomeViewHolder>{
     Context context;
@@ -36,7 +41,30 @@ public class HomeListAdapter extends ListAdapter<News, HomeViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
-        holder.bind(articles.get(position).getPublishedAt(),articles.get(position).getUlrToImage(),articles.get(position).getTitle(),articles.get(position).getSource().getName(),context);
+        Date date1 = null;
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            date1 = new SimpleDateFormat("yyyy-MM-dd").parse(articles.get(position).getPublishedAt());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        holder.bind(sdf1.format(date1),articles.get(position).getUrlToImage(),articles.get(position).getTitle(),articles.get(position).getSource().getName(),context);
+        holder.titleItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("title",articles.get(position).getTitle());
+                bundle.putString("author",articles.get(position).getAuthor());
+                bundle.putString("publisher",articles.get(position).getSource().getName());
+                bundle.putString("published",articles.get(position).getPublishedAt());
+                bundle.putString("image",articles.get(position).getUrlToImage());
+                bundle.putString("content",articles.get(position).getContent());
+                bundle.putString("url",articles.get(position).getUrl());
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
     }
 
     static class NewsDiff extends DiffUtil.ItemCallback<News> {

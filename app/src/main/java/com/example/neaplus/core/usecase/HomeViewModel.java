@@ -1,19 +1,16 @@
 package com.example.neaplus.core.usecase;
 
-import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.neaplus.core.domain.NewsRepository;
+import com.example.neaplus.core.repository.NewsRepository;
 import com.example.neaplus.core.model.News;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import retrofit2.Call;
 
 public class HomeViewModel extends ViewModel {
 
@@ -26,18 +23,34 @@ public class HomeViewModel extends ViewModel {
         mText = new MutableLiveData<>();
         mText.setValue("All News");
         parameters = new HashMap<>();
-
-        parameters.put("country","id");
-        parameters.put("category","business");
-        parameters.put("apiKey","a038ee0f2c8d4665bd21853c6b634cf8");
         mRepository = new NewsRepository();
+    }
+
+    public void init(){
+        if(mAllDataNews != null){
+            return;
+        }
+        parameters.clear();
+        mRepository = NewsRepository.getInstance();
+        parameters.put("apiKey","8d075792b61a4fbbb90ef96a27a72483");
     }
 
     public LiveData<String> getText() {
         return mText;
     }
-    public LiveData<News> getAllNews() { 
+    public LiveData<News> getAllNews(String country, String category) {
         if(mAllDataNews == null)
+            Log.e("MyListActivity", parameters.toString());
+            parameters.put("country",country);
+            parameters.put("category",category);
+            Log.e("MyListActivity", parameters.toString());
             mAllDataNews = mRepository.getAllNews(parameters);
+        return mAllDataNews; }
+    public LiveData<News> getAllNewsSearch(String search) {
+        if(mAllDataNews == null)
+            Log.e("MyListActivity", parameters.toString());
+            parameters.put("q",search);
+            mAllDataNews = mRepository.getAllNews(parameters);
+            Log.e("MyListActivity", parameters.toString());
         return mAllDataNews; }
 }
