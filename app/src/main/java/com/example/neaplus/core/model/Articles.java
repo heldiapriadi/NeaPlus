@@ -1,5 +1,7 @@
 package com.example.neaplus.core.model;
 
+
+
 public class Articles {
     private Source source;
 
@@ -7,9 +9,41 @@ public class Articles {
     private String title;
     private String description;
     private String url;
-    private String ulrToImage;
+    private String urlToImage;
     private String publishedAt;
     private String content;
+
+    public void setSource(Source source) {
+        this.source = source;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setUrlToImage(String ulrToImage) {
+        this.urlToImage = ulrToImage;
+    }
+
+    public void setPublishedAt(String publishedAt) {
+        this.publishedAt = publishedAt;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Articles(Source source, String author, String title, String description, String url, String ulrToImage, String publishedAt, String content) {
         this.source = source;
@@ -17,10 +51,13 @@ public class Articles {
         this.title = title;
         this.description = description;
         this.url = url;
-        this.ulrToImage = ulrToImage;
+        this.urlToImage = ulrToImage;
         this.publishedAt = publishedAt;
         this.content = content;
     }
+
+    public Articles(){}
+
 
     public Source getSource() {
         return source;
@@ -43,7 +80,7 @@ public class Articles {
     }
 
     public String getUlrToImage() {
-        return ulrToImage;
+        return urlToImage;
     }
 
     public String getPublishedAt() {
