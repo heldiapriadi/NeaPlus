@@ -49,7 +49,7 @@ public class HomeListAdapter extends ListAdapter<News, HomeViewHolder> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.bind(sdf1.format(date1), articles.get(position).getUrlToImage(), articles.get(position).getTitle(), articles.get(position).getSource().getName(), context);
+        holder.bind(sdf1.format(date1), articles.get(position).getUrlToImage(), articles.get(position).getTitle(), articles.get(position).getSource().getName(), articles.get(position).getUrl(), context);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -2,6 +2,7 @@ package com.example.neaplus.ui;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.neaplus.R;
 import com.example.neaplus.core.model.database.Article;
@@ -61,6 +63,43 @@ public class DetailActivity extends AppCompatActivity {
         SpannableString content = new SpannableString(intent.getStringExtra("url"));
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         url.setText(content);
+
+        Article article = new Article(
+                intent.getStringExtra("author"),
+                intent.getStringExtra("title"),
+                intent.getStringExtra("url"),
+                intent.getStringExtra("image"),
+                intent.getStringExtra("published"),
+                intent.getStringExtra("content"),
+                intent.getStringExtra("publisher")
+        );
+
+        articleViewModel.getArticle(intent.getStringExtra("url")).observe(this, title -> {
+            if (title.size() > 0){
+                imageBookmark.setColorFilter(ContextCompat.getColor(this, R.color.green), android.graphics.PorterDuff.Mode.MULTIPLY);
+                imageBookmark.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        articleViewModel.delete(article);
+                        Toast.makeText(getApplicationContext(),"Berita berhasil dihapus",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+            }else{
+                imageBookmark.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        articleViewModel.insert(article);
+                        Toast.makeText(getApplicationContext(), "Berita berhasil disimpan", Toast.LENGTH_LONG).show();
+                    }
+                });
+                imageBookmark.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.MULTIPLY);
+            }
+
+
+        });
+
         url.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,25 +124,10 @@ public class DetailActivity extends AppCompatActivity {
                 Intent intentShare = new Intent(Intent.ACTION_SEND);
                 intentShare.putExtra(intent.EXTRA_TEXT, intent.getStringExtra("title") + " (" + intent.getStringExtra("url") + ")");
                 intentShare.setType("text/plain");
-
                 startActivity(Intent.createChooser(intentShare, "Share to :"));
             }
         });
 
-        imageBookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Article article = new Article(
-                        intent.getStringExtra("author"),
-                        intent.getStringExtra("title"),
-                        intent.getStringExtra("url"),
-                        intent.getStringExtra("image"),
-                        intent.getStringExtra("published"),
-                        intent.getStringExtra("content"),
-                        intent.getStringExtra("publisher")
-                );
-                articleViewModel.insert(article);
-            }
-        });
+
     }
 }
