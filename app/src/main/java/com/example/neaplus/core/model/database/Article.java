@@ -9,8 +9,30 @@ import com.example.neaplus.core.model.Source;
 
 @Entity
 public class Article {
-    public int getId_article() {
-        return id_article;
+    @PrimaryKey
+    @NonNull
+    private String url;
+    @ColumnInfo
+    private String author;
+    @ColumnInfo
+    private String title;
+    @ColumnInfo
+    private String urlToImage;
+    @ColumnInfo
+    private String publishedAt;
+    @ColumnInfo
+    private String content;
+    @ColumnInfo
+    private String source_name;
+
+    public Article(String author, String title, String url, String urlToImage, String publishedAt, String content, String source_name) {
+        this.author = author;
+        this.title = title;
+        this.url = url;
+        this.urlToImage = urlToImage;
+        this.publishedAt = publishedAt;
+        this.content = content;
+        this.source_name = source_name;
     }
 
     public String getAuthor() {
@@ -19,10 +41,6 @@ public class Article {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public String getUrl() {
@@ -41,41 +59,8 @@ public class Article {
         return content;
     }
 
-    public int getId_source() {
-        return id_source;
+    public String getSource_name() {
+        return source_name;
     }
 
-    @PrimaryKey
-    @NonNull
-    private int id_article;
-    @ColumnInfo
-    private String author;
-    @ColumnInfo
-    private String title;
-    @ColumnInfo
-    private String description;
-
-    public Article(int id_article, String author, String title, String description, String url, String urlToImage, String publishedAt, String content, int id_source) {
-        this.id_article = id_article;
-        this.author = author;
-        this.title = title;
-        this.description = description;
-        this.url = url;
-        this.urlToImage = urlToImage;
-        this.publishedAt = publishedAt;
-        this.content = content;
-        this.id_source = id_source;
-    }
-
-    @ColumnInfo
-    private String url;
-    @ColumnInfo
-    private String urlToImage;
-    @ColumnInfo
-    private String publishedAt;
-    @ColumnInfo
-    private String content;
-
-    @ColumnInfo
-    private int id_source;
 }

@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.example.neaplus.core.usecase.NewsViewModel;
+import com.example.neaplus.core.viewmodel.HomeViewModel;
 import com.example.neaplus.databinding.FragmentHomeBinding;
 import com.example.neaplus.core.model.Articles;
 
@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ct = parent.getItemAtPosition(position).toString();
-                newsViewModel.init();
+                homeViewModel.init();
                 loadNews(ct, category);
             }
 
@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE) || (actionId == EditorInfo.IME_ACTION_NEXT)) {
-                    newsViewModel.init();
+                    homeViewModel.init();
                     loadNewsSearch(inputSearch.getText().toString());
                     onsearch = true;
                     animation();
@@ -142,7 +142,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadNews(String ct, String cty) {
-        newsViewModel.getAllNews(ct, cty).observe(getViewLifecycleOwner(), news -> {
+        homeViewModel.getAllNews(ct, cty).observe(getViewLifecycleOwner(), news -> {
             // Update the cached copy of the words in the adapter.
             List<Articles> newsArticles = news.getArticles();
             articleArrayList.clear();

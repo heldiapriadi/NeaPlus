@@ -1,5 +1,7 @@
 package com.example.neaplus.ui.bookmark;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,20 +11,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neaplus.R;
 import com.example.neaplus.core.model.Articles;
+import com.example.neaplus.core.model.database.Article;
+import com.example.neaplus.core.viewmodel.ArticleViewModel;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapter.CardViewViewHolder>  {
-    ArrayList<Articles> articles;
+public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapter.BookmarkViewHolder> {
+    private List<Article> articles;
+    private Activity activity;
+    private ArticleViewModel articleViewModel;
 
     private OnItemClickCallback onItemClickCallback;
+
     public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback;
     }
@@ -30,63 +43,70 @@ public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapte
     @NonNull
     @NotNull
     @Override
-    public BookmarkListAdapter.CardViewViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup viewGroup, int viewType) {
+    public BookmarkViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_row_bookmark, viewGroup, false);
-        return new CardViewViewHolder(view);
+        return new BookmarkViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull BookmarkListAdapter.CardViewViewHolder holder, int position) {
-        Articles article = articles.get(position);
+    public void onBindViewHolder(@NonNull @NotNull BookmarkViewHolder holder, int position) {
+        Article article = articles.get(position);
 
-            Picasso.get().load(article.getUlrToImage()).into(holder.imgPhoto    );
-          holder.tvTittle.setText(article.getTitle());
-          holder.tvPublisher.setText(article.getSource().getName());
-          holder.tvPublishedAt.setText(article.getPublishedAt());
+        Date date1 = null;
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            date1 = new SimpleDateFormat("yyyy-MM-dd").parse(articles.get(position).getPublishedAt());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-          holder.imgBtnDelete.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Toast.makeText(holder.itemView.getContext(),"Clicked Button Delete",Toast.LENGTH_SHORT).show();
-              }
-          });
+        Picasso.get().load(article.getUrlToImage()).into(holder.imgPhoto);
+        holder.tvTittle.setText(article.getTitle());
+        holder.tvPublisher.setText(article.getSource_name());
+        holder.tvPublishedAt.setText(sdf1.format(date1));
 
-          holder.imgBtnShare.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(Intent.ACTION_SEND);
+        holder.imgBtnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                articleViewModel = new ViewModelProvider((ViewModelStoreOwner) activity, new ViewModelProvider.AndroidViewModelFactory(activity.getApplication())).get(ArticleViewModel.class);
 
-                // Membawa data / pesan yang ingin dishare
-                    intent.putExtra(intent.EXTRA_TEXT, article.getTitle()+" ("+article.getUrl()+")");
-                    intent.setType("text/plain");
+                articleViewModel.delete(article);
+            }
+        });
 
-                // Menjalankan perintah Intent Implicit
-                    holder.itemView.getContext().startActivity(Intent.createChooser(intent,"Share to :"));
-              }
-          });
+        holder.imgBtnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(intent.EXTRA_TEXT, article.getTitle() + " (" + article.getUrl() + ")");
+                intent.setType("text/plain");
 
-          holder.itemView.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
+                holder.itemView.getContext().startActivity(Intent.createChooser(intent, "Share to :"));
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                  Toast.makeText(holder.itemView.getContext(), "Kamu memilih "+ article.getTitle(),Toast.LENGTH_SHORT).show();
-                  onItemClickCallback.onItemClicked(articles.get(holder.getAdapterPosition()));
-              }
-          });
+                onItemClickCallback.onItemClicked(articles.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        if (articles.isEmpty()){
+        if (articles.isEmpty()) {
             return 0;
         }
         return articles.size();
     }
 
-    public class CardViewViewHolder extends RecyclerView.ViewHolder {
+    public class BookmarkViewHolder extends RecyclerView.ViewHolder {
         ImageView imgPhoto, imgBtnShare, imgBtnDelete;
         TextView tvTittle, tvPublisher, tvPublishedAt;
 
-        public CardViewViewHolder(@NonNull @NotNull View itemView) {
+        public BookmarkViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             imgPhoto = itemView.findViewById(R.id.news_photo);
             imgBtnDelete = itemView.findViewById(R.id.news_delete);
@@ -97,11 +117,12 @@ public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapte
         }
     }
 
-    public BookmarkListAdapter(ArrayList<Articles> list){
+    public BookmarkListAdapter(List<Article> list, Activity activity) {
         this.articles = list;
+        this.activity = activity;
     }
 
     public interface OnItemClickCallback {
-        void onItemClicked(Articles article);
+        void onItemClicked(Article article);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.neaplus.core.usecase;
+package com.example.neaplus.core.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

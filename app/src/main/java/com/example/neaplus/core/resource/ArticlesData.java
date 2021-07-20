@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ArticlesData {
 
     private static Source[] articleSource = {
-            new Source("associated-press","Associated Press"),
+            new Source("associated-press", "Associated Press"),
             new Source(null, "CNET")
     };
 
@@ -46,6 +46,7 @@ public class ArticlesData {
             "BERLIN (AP) German officials are defending their preparations for flooding in the face of the raging torrents that caught many people by surprise and left over 190 people dead in Western Europe, but … [+4255 chars]",
             "Before the match we got a backstage segment in which Rollins blamed Edge for taking him out of the title picture, and declared he'd be next in line for whoever wins the main event. That played into t… [+2315 chars]"
     };
+
     public static ArrayList<Articles> getListData() {
         ArrayList<Articles> list = new ArrayList<>();
         for (int position = 0; position < articleTitle.length; position++) {
@@ -62,5 +63,7 @@ public class ArticlesData {
             list.add(articles);
         }
         return list;
-    };
+    }
+
+    ;
 }

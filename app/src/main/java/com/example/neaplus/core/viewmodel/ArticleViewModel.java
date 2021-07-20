@@ -1,11 +1,11 @@
-package com.example.neaplus.core.usecase;
+package com.example.neaplus.core.viewmodel;
 
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.neaplus.core.domain.ArticleRepository;
+import com.example.neaplus.core.repository.ArticleRepository;
 import com.example.neaplus.core.model.database.Article;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class ArticleViewModel extends AndroidViewModel {
     private ArticleRepository mRepository;
     private LiveData<List<Article>> mAllArticle;
 
-    public ArticleViewModel(Application application){
+    public ArticleViewModel(Application application) {
         super(application);
         mRepository = new ArticleRepository(application);
         mAllArticle = mRepository.getAllArticle();
@@ -24,15 +24,15 @@ public class ArticleViewModel extends AndroidViewModel {
         return mAllArticle;
     }
 
-    void insert(Article article){
+    public void insert(Article article) {
         mRepository.insert(article);
     }
 
-    void deleteAll(){
-        mRepository.deleteAll();;
+    public void deleteAll() {
+        mRepository.deleteAll();
     }
 
-    void delete(Article article){
+    public void delete(Article article) {
         mRepository.delete(article);
     }
 }
