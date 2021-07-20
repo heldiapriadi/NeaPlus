@@ -69,8 +69,8 @@ public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapte
             @Override
             public void onClick(View v) {
                 articleViewModel = new ViewModelProvider((ViewModelStoreOwner) activity, new ViewModelProvider.AndroidViewModelFactory(activity.getApplication())).get(ArticleViewModel.class);
-
                 articleViewModel.delete(article);
+                Toast.makeText(activity.getApplicationContext(),"Berita berhasil dihapus",Toast.LENGTH_SHORT).show();
             }
         });
 

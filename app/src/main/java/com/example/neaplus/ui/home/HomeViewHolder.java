@@ -28,6 +28,7 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
     private final ImageView newsImageItemView, shareButtonItemView;
     TextView titleItemView;
     private final TextView publisherItemView;
+    public CardView cardView;
 
     public HomeViewHolder(View itemView) {
         super(itemView);

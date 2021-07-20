@@ -35,4 +35,8 @@ public class ArticleViewModel extends AndroidViewModel {
     public void delete(Article article) {
         mRepository.delete(article);
     }
+
+    public LiveData<List<String>> getArticle(String url){
+        return mRepository.getArticle(url);
+    }
 }

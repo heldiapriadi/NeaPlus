@@ -12,14 +12,14 @@ import com.example.neaplus.core.model.News;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HomeViewModel extends ViewModel {
+public class NewsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
     private NewsRepository mRepository;
     private MutableLiveData<News> mAllDataNews;
     private Map<String, String> parameters;
 
-    public HomeViewModel() {
+    public NewsViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("All News");
         parameters = new HashMap<>();

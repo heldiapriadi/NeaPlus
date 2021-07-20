@@ -24,4 +24,7 @@ public interface ArticleDao {
 
     @Delete
     void delete(Article article);
+
+    @Query("SELECT title FROM article WHERE url = :url")
+    LiveData<List<String>> getArticle(String url);
 }
