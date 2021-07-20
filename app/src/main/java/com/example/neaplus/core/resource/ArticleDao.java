@@ -8,9 +8,9 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.neaplus.core.model.database.Article;
-import com.example.neaplus.core.model.database.Source;
 
 import java.util.List;
+
 @Dao
 public interface ArticleDao {
     @Query("SELECT * FROM article")

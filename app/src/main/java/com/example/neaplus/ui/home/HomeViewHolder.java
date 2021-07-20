@@ -1,6 +1,7 @@
 package com.example.neaplus.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,23 +24,38 @@ import java.util.Date;
 
 public class HomeViewHolder extends RecyclerView.ViewHolder {
     private final TextView publishedItemView;
-    private final ImageView newsImageItemView;
+    private final ImageView newsImageItemView, shareButtonItemView;
     TextView titleItemView;
     private final TextView publisherItemView;
-    ConstraintLayout constraintLayout;
+
     public HomeViewHolder(View itemView) {
         super(itemView);
-        publishedItemView = (TextView)itemView.findViewById(R.id.text_published);
-        newsImageItemView = (ImageView)itemView.findViewById(R.id.image_berita);
-        titleItemView = (TextView)itemView.findViewById(R.id.text_title);
-        publisherItemView = (TextView)itemView.findViewById(R.id.text_publisher);
+        publishedItemView = (TextView) itemView.findViewById(R.id.text_published);
+        newsImageItemView = (ImageView) itemView.findViewById(R.id.image_berita);
+        titleItemView = (TextView) itemView.findViewById(R.id.text_title);
+        publisherItemView = (TextView) itemView.findViewById(R.id.text_publisher);
+        shareButtonItemView = (ImageView) itemView.findViewById(R.id.image_share);
     }
 
-    public void bind(String published, String image, String title, String publisher, Context context) {
+    public void bind(String published, String image, String title, String publisher, String url, Context context) {
         publishedItemView.setText(published);
-        Picasso.with(context).load(image).into(newsImageItemView);
+        Picasso.get().load(image).into(newsImageItemView);
         titleItemView.setText(title);
         publisherItemView.setText(publisher);
+
+        shareButtonItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                // Membawa data / pesan yang ingin dishare
+                intent.putExtra(intent.EXTRA_TEXT, title + " (" + url + ")");
+                intent.setType("text/plain");
+
+                // Menjalankan perintah Intent Implicit
+                context.startActivity(Intent.createChooser(intent, "Share to :"));
+            }
+        });
     }
 
     static HomeViewHolder create(ViewGroup parent) {

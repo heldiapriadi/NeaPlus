@@ -3,7 +3,6 @@ package com.example.neaplus.ui.home;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,25 +25,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.example.neaplus.R;
-import com.example.neaplus.core.usecase.BookmarkViewModel;
-import com.example.neaplus.core.usecase.HomeViewModel;
+import com.example.neaplus.core.viewmodel.HomeViewModel;
 import com.example.neaplus.databinding.FragmentHomeBinding;
 import com.example.neaplus.core.model.Articles;
-import com.example.neaplus.core.resource.JsonPlaceHolderApi;
-import com.example.neaplus.core.model.News;
-import com.example.neaplus.ui.MainActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
 
@@ -65,7 +48,7 @@ public class HomeFragment extends Fragment {
     private Button technologyButton;
     private Spinner spinner;
     private EditText inputSearch;
-    private String category="";
+    private String category = "";
     private String country;
     private int positionSpinner;
     ArrayList<Articles> articleArrayList = new ArrayList<>();
@@ -86,8 +69,8 @@ public class HomeFragment extends Fragment {
         Item.add("us");
 
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getActivity().getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, Item);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+                new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, Item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         country = spinner.getSelectedItem().toString();
 
@@ -114,9 +97,9 @@ public class HomeFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String ct = parent.getItemAtPosition(position).toString();
-                    homeViewModel.init();
-                    loadNews(ct,category);
+                String ct = parent.getItemAtPosition(position).toString();
+                homeViewModel.init();
+                loadNews(ct, category);
             }
 
             @Override
@@ -125,18 +108,18 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        inputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+        inputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE) || (actionId==EditorInfo.IME_ACTION_NEXT)) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE) || (actionId == EditorInfo.IME_ACTION_NEXT)) {
                     homeViewModel.init();
                     loadNewsSearch(inputSearch.getText().toString());
                     onsearch = true;
                     animation();
                     inputSearch.setText("");
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
@@ -147,7 +130,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadNews(String ct, String cty) {
-        homeViewModel.getAllNews(ct,cty).observe(getViewLifecycleOwner(), news -> {
+        homeViewModel.getAllNews(ct, cty).observe(getViewLifecycleOwner(), news -> {
             // Update the cached copy of the words in the adapter.
             List<Articles> newsArticles = news.getArticles();
             articleArrayList.clear();
@@ -173,6 +156,7 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
     private void setupRecyclerView() {
         if (adapterNews == null) {
             adapterNews = new HomeListAdapter(this.getActivity(), articleArrayList, new HomeListAdapter.NewsDiff());
@@ -184,7 +168,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void search_click(){
+    public void search_click() {
         imageSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,8 +176,9 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    public void animation(){
-        if(onsearch == false){
+
+    public void animation() {
+        if (onsearch == false) {
             YoYo.with(Techniques.FadeOut)
                     .duration(500)
                     .playOn(binding.textNews);
@@ -208,7 +193,7 @@ public class HomeFragment extends Fragment {
                 }
             }, 500);
             onsearch = true;
-        }else{
+        } else {
             YoYo.with(Techniques.FadeIn)
                     .duration(500)
                     .playOn(binding.textNews);
@@ -225,11 +210,12 @@ public class HomeFragment extends Fragment {
             onsearch = false;
         }
     }
-    public void business_click(){
+
+    public void business_click() {
         businessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("business")){
+                if (!category.equals("business")) {
                     binding.businessButton.setBackgroundColor(Color.RED);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -244,11 +230,12 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    public void entertainment_click(){
+
+    public void entertainment_click() {
         entertainmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("entertainment")){
+                if (!category.equals("entertainment")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.RED);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -264,11 +251,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void general_click(){
+    public void general_click() {
         generalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("general")){
+                if (!category.equals("general")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.RED);
@@ -284,11 +271,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void health_click(){
+    public void health_click() {
         healthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("health")){
+                if (!category.equals("health")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -304,11 +291,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void science_click(){
+    public void science_click() {
         scienceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("science")){
+                if (!category.equals("science")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -324,11 +311,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void sports_click(){
+    public void sports_click() {
         sportsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("sports")){
+                if (!category.equals("sports")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -344,11 +331,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void technology_click(){
+    public void technology_click() {
         technologyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("technology")){
+                if (!category.equals("technology")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
