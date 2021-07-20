@@ -1,16 +1,33 @@
 package com.example.neaplus.core.model;
 
 import androidx.room.Entity;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Articles {
+    @SerializedName("source")
+    @Expose
     private Source source;
-
+    @SerializedName("author")
+    @Expose
     private String author;
+    @SerializedName("title")
+    @Expose
     private String title;
+    @SerializedName("description")
+    @Expose
     private String description;
+    @SerializedName("url")
+    @Expose
     private String url;
+    @SerializedName("urlToImage")
+    @Expose
     private String urlToImage;
+    @SerializedName("publishedAt")
+    @Expose
     private String publishedAt;
+    @SerializedName("content")
+    @Expose
     private String content;
 
     public void setSource(Source source) {
@@ -45,13 +62,14 @@ public class Articles {
         this.content = content;
     }
 
-    public Articles(Source source, String author, String title, String description, String url, String ulrToImage, String publishedAt, String content) {
+    public Articles(Source source, String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
+
         this.source = source;
         this.author = author;
         this.title = title;
         this.description = description;
         this.url = url;
-        this.urlToImage = ulrToImage;
+        this.urlToImage = urlToImage;
         this.publishedAt = publishedAt;
         this.content = content;
     }
@@ -79,7 +97,7 @@ public class Articles {
         return url;
     }
 
-    public String getUlrToImage() {
+    public String getUrlToImage() {
         return urlToImage;
     }
 
