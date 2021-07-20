@@ -20,9 +20,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class HomeListAdapter extends ListAdapter<News, HomeViewHolder>{
+public class HomeListAdapter extends ListAdapter<News, HomeViewHolder> {
     Context context;
     ArrayList<Articles> articles;
+
     public HomeListAdapter(Context context, ArrayList<Articles> articles, @NonNull DiffUtil.ItemCallback<News> diffCallback) {
         super(diffCallback);
         this.context = context;
@@ -48,18 +49,18 @@ public class HomeListAdapter extends ListAdapter<News, HomeViewHolder>{
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.bind(sdf1.format(date1),articles.get(position).getUrlToImage(),articles.get(position).getTitle(),articles.get(position).getSource().getName(),context);
-        holder.titleItemView.setOnClickListener(new View.OnClickListener() {
+        holder.bind(sdf1.format(date1), articles.get(position).getUrlToImage(), articles.get(position).getTitle(), articles.get(position).getSource().getName(), context);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("title",articles.get(position).getTitle());
-                bundle.putString("author",articles.get(position).getAuthor());
-                bundle.putString("publisher",articles.get(position).getSource().getName());
-                bundle.putString("published",articles.get(position).getPublishedAt());
-                bundle.putString("image",articles.get(position).getUrlToImage());
-                bundle.putString("content",articles.get(position).getContent());
-                bundle.putString("url",articles.get(position).getUrl());
+                bundle.putString("title", articles.get(position).getTitle());
+                bundle.putString("author", articles.get(position).getAuthor());
+                bundle.putString("publisher", articles.get(position).getSource().getName());
+                bundle.putString("published", articles.get(position).getPublishedAt());
+                bundle.putString("image", articles.get(position).getUrlToImage());
+                bundle.putString("content", articles.get(position).getContent());
+                bundle.putString("url", articles.get(position).getUrl());
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtras(bundle);
                 context.startActivity(intent);

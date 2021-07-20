@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,15 +25,17 @@ import java.util.Date;
 public class HomeViewHolder extends RecyclerView.ViewHolder {
     private final TextView publishedItemView;
     private final ImageView newsImageItemView;
-    TextView titleItemView;
+    private final TextView titleItemView;
     private final TextView publisherItemView;
-    ConstraintLayout constraintLayout;
+    CardView cardView;
+
     public HomeViewHolder(View itemView) {
         super(itemView);
-        publishedItemView = (TextView)itemView.findViewById(R.id.text_published);
-        newsImageItemView = (ImageView)itemView.findViewById(R.id.image_berita);
-        titleItemView = (TextView)itemView.findViewById(R.id.text_title);
-        publisherItemView = (TextView)itemView.findViewById(R.id.text_publisher);
+        publishedItemView = (TextView) itemView.findViewById(R.id.text_published);
+        newsImageItemView = (ImageView) itemView.findViewById(R.id.image_berita);
+        titleItemView = (TextView) itemView.findViewById(R.id.text_title);
+        publisherItemView = (TextView) itemView.findViewById(R.id.text_publisher);
+        cardView = (CardView) itemView.findViewById(R.id.cardViewNews);
     }
 
     public void bind(String published, String image, String title, String publisher, Context context) {

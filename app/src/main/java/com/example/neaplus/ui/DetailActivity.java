@@ -22,6 +22,7 @@ public class DetailActivity extends AppCompatActivity {
     private ImageView image;
     private TextView content;
     private TextView url;
+    private ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class DetailActivity extends AppCompatActivity {
         image = findViewById(R.id.image_berita);
         content = findViewById(R.id.text_content);
         url = findViewById(R.id.text_url);
+        back = findViewById(R.id.image_back);
 
         Intent intent = getIntent();
         title.setText(intent.getStringExtra("title"));
@@ -54,12 +56,19 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("url",intent.getStringExtra("url"));
+                bundle.putString("url", intent.getStringExtra("url"));
                 Intent intent2 = new Intent(getApplicationContext(), WebActivity.class);
                 intent2.putExtras(bundle);
                 startActivity(intent2);
             }
         });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
     }
 }

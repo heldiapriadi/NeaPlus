@@ -3,11 +3,11 @@ package com.example.neaplus.ui.home;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,12 +16,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,31 +27,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.example.neaplus.R;
-import com.example.neaplus.core.usecase.BookmarkViewModel;
-import com.example.neaplus.core.usecase.HomeViewModel;
+import com.example.neaplus.core.usecase.NewsViewModel;
 import com.example.neaplus.databinding.FragmentHomeBinding;
 import com.example.neaplus.core.model.Articles;
-import com.example.neaplus.core.resource.JsonPlaceHolderApi;
-import com.example.neaplus.core.model.News;
-import com.example.neaplus.ui.MainActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private ImageView imageSearch;
-    private HomeViewModel homeViewModel;
+    private NewsViewModel newsViewModel;
     private HomeListAdapter adapterNews;
     private RecyclerView recyclerViewNews;
     private Button businessButton;
@@ -65,9 +50,9 @@ public class HomeFragment extends Fragment {
     private Button technologyButton;
     private Spinner spinner;
     private EditText inputSearch;
-    private String category="";
+    private String category = "";
     private String country;
-    private int positionSpinner;
+    private NestedScrollView scroll;
     ArrayList<Articles> articleArrayList = new ArrayList<>();
     private boolean onsearch = false;
 
@@ -78,7 +63,7 @@ public class HomeFragment extends Fragment {
 
 //        textViewResult = binding.textViewResult;
         final TextView textView = binding.textNews;
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
 
         spinner = binding.spinnerCountry;
         ArrayList<String> Item = new ArrayList<>();
@@ -86,8 +71,8 @@ public class HomeFragment extends Fragment {
         Item.add("us");
 
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getActivity().getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, Item);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+                new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, Item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         country = spinner.getSelectedItem().toString();
 
@@ -101,6 +86,7 @@ public class HomeFragment extends Fragment {
         sportsButton = binding.sportsButton;
         technologyButton = binding.technologyButton;
         inputSearch = binding.inputSearch;
+        scroll = binding.nestedScrollView;
 
         search_click();
         business_click();
@@ -114,9 +100,9 @@ public class HomeFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String ct = parent.getItemAtPosition(position).toString();
-                    homeViewModel.init();
-                    loadNews(ct,category);
+                String ct = parent.getItemAtPosition(position).toString();
+                newsViewModel.init();
+                loadNews(ct, category);
             }
 
             @Override
@@ -125,29 +111,38 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        inputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+        inputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE) || (actionId==EditorInfo.IME_ACTION_NEXT)) {
-                    homeViewModel.init();
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE) || (actionId == EditorInfo.IME_ACTION_NEXT)) {
+                    newsViewModel.init();
                     loadNewsSearch(inputSearch.getText().toString());
                     onsearch = true;
                     animation();
                     inputSearch.setText("");
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
+        });
 
+        scroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if(onsearch == true){
+                    onsearch = true;
+                    animation();
+                }
+            }
         });
 
         return root;
     }
 
     private void loadNews(String ct, String cty) {
-        homeViewModel.getAllNews(ct,cty).observe(getViewLifecycleOwner(), news -> {
+        newsViewModel.getAllNews(ct, cty).observe(getViewLifecycleOwner(), news -> {
             // Update the cached copy of the words in the adapter.
             List<Articles> newsArticles = news.getArticles();
             articleArrayList.clear();
@@ -158,7 +153,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadNewsSearch(String search) {
-        homeViewModel.getAllNewsSearch(search).observe(getViewLifecycleOwner(), news -> {
+        newsViewModel.getAllNewsSearch(search).observe(getViewLifecycleOwner(), news -> {
             // Update the cached copy of the words in the adapter.
             List<Articles> newsArticles = news.getArticles();
             articleArrayList.clear();
@@ -173,6 +168,7 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
     private void setupRecyclerView() {
         if (adapterNews == null) {
             adapterNews = new HomeListAdapter(this.getActivity(), articleArrayList, new HomeListAdapter.NewsDiff());
@@ -184,7 +180,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void search_click(){
+    public void search_click() {
         imageSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,8 +188,9 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    public void animation(){
-        if(onsearch == false){
+
+    public void animation() {
+        if (onsearch == false) {
             YoYo.with(Techniques.FadeOut)
                     .duration(500)
                     .playOn(binding.textNews);
@@ -208,7 +205,7 @@ public class HomeFragment extends Fragment {
                 }
             }, 500);
             onsearch = true;
-        }else{
+        } else {
             YoYo.with(Techniques.FadeIn)
                     .duration(500)
                     .playOn(binding.textNews);
@@ -225,11 +222,12 @@ public class HomeFragment extends Fragment {
             onsearch = false;
         }
     }
-    public void business_click(){
+
+    public void business_click() {
         businessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("business")){
+                if (!category.equals("business")) {
                     binding.businessButton.setBackgroundColor(Color.RED);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -238,17 +236,21 @@ public class HomeFragment extends Fragment {
                     binding.sportsButton.setBackgroundColor(Color.WHITE);
                     binding.technologyButton.setBackgroundColor(Color.WHITE);
                     category = "business";
-                    homeViewModel.init();
-                    loadNews(country, category);
+                } else {
+                    binding.businessButton.setBackgroundColor(Color.WHITE);
+                    category = "";
                 }
+                newsViewModel.init();
+                loadNews(country, category);
             }
         });
     }
-    public void entertainment_click(){
+
+    public void entertainment_click() {
         entertainmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("entertainment")){
+                if (!category.equals("entertainment")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.RED);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -257,18 +259,21 @@ public class HomeFragment extends Fragment {
                     binding.sportsButton.setBackgroundColor(Color.WHITE);
                     binding.technologyButton.setBackgroundColor(Color.WHITE);
                     category = "entertainment";
-                    homeViewModel.init();
-                    loadNews(country, category);
+                } else {
+                    binding.entertainmentButton.setBackgroundColor(Color.WHITE);
+                    category = "";
                 }
+                newsViewModel.init();
+                loadNews(country, category);
             }
         });
     }
 
-    public void general_click(){
+    public void general_click() {
         generalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("general")){
+                if (!category.equals("general")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.RED);
@@ -277,18 +282,21 @@ public class HomeFragment extends Fragment {
                     binding.sportsButton.setBackgroundColor(Color.WHITE);
                     binding.technologyButton.setBackgroundColor(Color.WHITE);
                     category = "general";
-                    homeViewModel.init();
-                    loadNews(country, category);
+                } else {
+                    binding.generalButton.setBackgroundColor(Color.WHITE);
+                    category = "";
                 }
+                newsViewModel.init();
+                loadNews(country, category);
             }
         });
     }
 
-    public void health_click(){
+    public void health_click() {
         healthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("health")){
+                if (!category.equals("health")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -297,18 +305,21 @@ public class HomeFragment extends Fragment {
                     binding.sportsButton.setBackgroundColor(Color.WHITE);
                     binding.technologyButton.setBackgroundColor(Color.WHITE);
                     category = "health";
-                    homeViewModel.init();
-                    loadNews(country, category);
+                } else {
+                    binding.healthButton.setBackgroundColor(Color.WHITE);
+                    category = "";
                 }
+                newsViewModel.init();
+                loadNews(country, category);
             }
         });
     }
 
-    public void science_click(){
+    public void science_click() {
         scienceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("science")){
+                if (!category.equals("science")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -317,18 +328,21 @@ public class HomeFragment extends Fragment {
                     binding.sportsButton.setBackgroundColor(Color.WHITE);
                     binding.technologyButton.setBackgroundColor(Color.WHITE);
                     category = "science";
-                    homeViewModel.init();
-                    loadNews(country, category);
+                } else {
+                    binding.scienceButton.setBackgroundColor(Color.WHITE);
+                    category = "";
                 }
+                newsViewModel.init();
+                loadNews(country, category);
             }
         });
     }
 
-    public void sports_click(){
+    public void sports_click() {
         sportsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("sports")){
+                if (!category.equals("sports")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -337,18 +351,21 @@ public class HomeFragment extends Fragment {
                     binding.sportsButton.setBackgroundColor(Color.RED);
                     binding.technologyButton.setBackgroundColor(Color.WHITE);
                     category = "sports";
-                    homeViewModel.init();
-                    loadNews(country, category);
+                } else {
+                    binding.sportsButton.setBackgroundColor(Color.WHITE);
+                    category = "";
                 }
+                newsViewModel.init();
+                loadNews(country, category);
             }
         });
     }
 
-    public void technology_click(){
+    public void technology_click() {
         technologyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category.equals("technology")){
+                if (!category.equals("technology")) {
                     binding.businessButton.setBackgroundColor(Color.WHITE);
                     binding.entertainmentButton.setBackgroundColor(Color.WHITE);
                     binding.generalButton.setBackgroundColor(Color.WHITE);
@@ -357,9 +374,12 @@ public class HomeFragment extends Fragment {
                     binding.sportsButton.setBackgroundColor(Color.WHITE);
                     binding.technologyButton.setBackgroundColor(Color.RED);
                     category = "technology";
-                    homeViewModel.init();
-                    loadNews(country, category);
+                } else {
+                    binding.technologyButton.setBackgroundColor(Color.WHITE);
+                    category = "";
                 }
+                newsViewModel.init();
+                loadNews(country, category);
             }
         });
     }
