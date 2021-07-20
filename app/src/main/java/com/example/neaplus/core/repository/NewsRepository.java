@@ -16,7 +16,6 @@ import retrofit2.Response;
 
 public class NewsRepository {
     private JsonPlaceHolderApi newsAPI;
-    private LiveData<List<News>> mAllDataNews;
     private static NewsRepository newsRepository;
 
     public NewsRepository() {
@@ -48,3 +47,5 @@ public class NewsRepository {
         return newsData;
     }
 }
+
+

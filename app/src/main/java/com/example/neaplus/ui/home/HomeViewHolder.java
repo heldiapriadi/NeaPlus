@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +36,7 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
         titleItemView = (TextView) itemView.findViewById(R.id.text_title);
         publisherItemView = (TextView) itemView.findViewById(R.id.text_publisher);
         shareButtonItemView = (ImageView) itemView.findViewById(R.id.image_share);
+        cardView = (CardView) itemView.findViewById(R.id.cardViewNews);
     }
 
     public void bind(String published, String image, String title, String publisher, String url, Context context) {

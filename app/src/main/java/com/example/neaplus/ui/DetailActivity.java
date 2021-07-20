@@ -25,6 +25,7 @@ public class DetailActivity extends AppCompatActivity {
     private ImageView image, imageShare, imageBookmark;
     private TextView content;
     private TextView url;
+    private ImageView back;
 
     private ArticleViewModel articleViewModel;
 
@@ -48,6 +49,7 @@ public class DetailActivity extends AppCompatActivity {
         url = findViewById(R.id.text_url);
         imageShare = findViewById(R.id.image_share);
         imageBookmark = findViewById(R.id.image_bookmark);
+        back = findViewById(R.id.image_back);
 
         Intent intent = getIntent();
         title.setText(intent.getStringExtra("title"));
@@ -69,6 +71,13 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         imageShare.setOnClickListener(new View.OnClickListener() {
             @Override
