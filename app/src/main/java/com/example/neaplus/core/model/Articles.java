@@ -1,6 +1,6 @@
 package com.example.neaplus.core.model;
 
-
+import androidx.room.Entity;
 
 public class Articles {
     private Source source;
