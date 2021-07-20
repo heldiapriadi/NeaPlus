@@ -45,63 +45,87 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/business_button"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="10dp"
-                android:text="Button 1"
+                android:text="Business"
                 android:textSize="10dp"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:onClick="click1"
+                android:onClick="business_click"
                 tools:ignore="OnClick" />
 
             <Button
-                android:id="@+id/button2"
-                android:layout_width="120dp"
+                android:id="@+id/entertainment_button"
+                android:layout_width="140dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="10dp"
-                android:text="Button 2"
+                android:text="Entertainment"
                 android:textSize="10dp"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:onClick="click2"
+                android:onClick="entertainment_click"
                 tools:ignore="OnClick" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/general_button"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="10dp"
-                android:text="Button 3"
+                android:text="General"
                 android:textSize="10dp"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:onClick="click3"
+                android:onClick="general_click"
                 tools:ignore="OnClick" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/health_button"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="10dp"
-                android:text="Button 4"
+                android:text="Health"
                 android:textSize="10dp"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:onClick="click4"
+                android:onClick="health_click"
                 tools:ignore="OnClick" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/science_button"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="10dp"
-                android:text="Button 5"
+                android:text="Science"
                 android:textSize="10dp"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
-                android:onClick="click5"
+                android:onClick="science_click"
+                tools:ignore="OnClick" />
+
+            <Button
+                android:id="@+id/sports_button"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:text="Sports"
+                android:textSize="10dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:onClick="sports_click"
+                tools:ignore="OnClick" />
+
+            <Button
+                android:id="@+id/technology_button"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:text="Technology"
+                android:textSize="10dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:onClick="technology_click"
                 tools:ignore="OnClick" />
         </LinearLayout>
 
@@ -120,17 +144,21 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/view_search"
         android:layout_width="250dp"
-        android:layout_height="35dp"
+        android:layout_height="45dp"
         android:layout_marginStart="15dp"
-        app:cardCornerRadius="10dp"
+        android:layout_marginTop="33dp"
         android:visibility="gone"
+        app:cardCornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/image_search">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/input_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:imeOptions="actionDone"
+            android:lines="1"
+            android:singleLine="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_search" />
     </androidx.cardview.widget.CardView>
@@ -151,20 +179,23 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="132dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="142dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view">
 
-        <TextView
-            android:id="@+id/text_view_result"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listRecyclerView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

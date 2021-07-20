@@ -1,12 +1,19 @@
 package com.example.neaplus.core.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class News {
+    @SerializedName("status")
+    @Expose
     private String status;
-    
+    @SerializedName("totalResults")
+    @Expose
     private int totalResults;
-
+    @SerializedName("articles")
+    @Expose
     private List<Articles> articles;
 
     public News(String status, int totalResults, List<Articles> articles) {
