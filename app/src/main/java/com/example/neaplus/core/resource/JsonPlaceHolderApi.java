@@ -12,3 +12,5 @@ public interface JsonPlaceHolderApi {
     @GET("top-headlines")
     Call<News> getNews(@QueryMap Map<String, String> parameters);
 }
+
+

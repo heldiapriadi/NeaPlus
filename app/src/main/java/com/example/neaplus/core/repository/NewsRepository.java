@@ -16,26 +16,25 @@ import retrofit2.Response;
 
 public class NewsRepository {
     private JsonPlaceHolderApi newsAPI;
-    private LiveData<List<News>> mAllDataNews;
     private static NewsRepository newsRepository;
 
     public NewsRepository() {
-        newsAPI =  RetrofitService.createService(JsonPlaceHolderApi.class);
+        newsAPI = RetrofitService.createService(JsonPlaceHolderApi.class);
     }
 
-    public static NewsRepository getInstance(){
-        if ( newsRepository == null){
+    public static NewsRepository getInstance() {
+        if (newsRepository == null) {
             newsRepository = new NewsRepository();
         }
         return newsRepository;
     }
 
-    public MutableLiveData<News> getAllNews(Map<String, String> source){
+    public MutableLiveData<News> getAllNews(Map<String, String> source) {
         MutableLiveData<News> newsData = new MutableLiveData<>();
         newsAPI.getNews(source).enqueue(new Callback<News>() {
             @Override
             public void onResponse(Call<News> call, Response<News> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     newsData.setValue(response.body());
                 }
             }
@@ -48,3 +47,5 @@ public class NewsRepository {
         return newsData;
     }
 }
+
+

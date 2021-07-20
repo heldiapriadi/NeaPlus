@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="30dp">
+        app:cardCornerRadius="30dp"
+        android:id="@+id/cardViewNews">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
