@@ -16,10 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.neaplus.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class HomeViewHolder extends RecyclerView.ViewHolder {
     private final TextView publishedItemView;
     private final ImageView newsImageItemView;
-    private final TextView titleItemView;
+    TextView titleItemView;
     private final TextView publisherItemView;
     ConstraintLayout constraintLayout;
     public HomeViewHolder(View itemView) {

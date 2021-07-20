@@ -21,7 +21,7 @@ public class Articles {
     private String url;
     @SerializedName("urlToImage")
     @Expose
-    private String ulrToImage;
+    private String urlToImage;
     @SerializedName("publishedAt")
     @Expose
     private String publishedAt;
@@ -29,13 +29,13 @@ public class Articles {
     @Expose
     private String content;
 
-    public Articles(Source source, String author, String title, String description, String url, String ulrToImage, String publishedAt, String content) {
+    public Articles(Source source, String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
         this.source = source;
         this.author = author;
         this.title = title;
         this.description = description;
         this.url = url;
-        this.ulrToImage = ulrToImage;
+        this.urlToImage = urlToImage;
         this.publishedAt = publishedAt;
         this.content = content;
     }
@@ -60,8 +60,8 @@ public class Articles {
         return url;
     }
 
-    public String getUlrToImage() {
-        return ulrToImage;
+    public String getUrlToImage() {
+        return urlToImage;
     }
 
     public String getPublishedAt() {

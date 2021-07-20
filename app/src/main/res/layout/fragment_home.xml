@@ -144,7 +144,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/view_search"
         android:layout_width="250dp"
-        android:layout_height="35dp"
+        android:layout_height="45dp"
         android:layout_marginStart="15dp"
         app:cardCornerRadius="10dp"
         android:visibility="gone"
@@ -156,7 +156,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_search" />
+            app:layout_constraintTop_toTopOf="@+id/image_search"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:lines="1"/>
     </androidx.cardview.widget.CardView>
 
     <ImageView
@@ -178,8 +181,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="142dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view">
 

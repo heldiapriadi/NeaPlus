@@ -1,6 +1,4 @@
-package com.example.neaplus.core.domain;
-
-import android.app.Application;
+package com.example.neaplus.core.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -15,15 +13,21 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewsRepository {
     private JsonPlaceHolderApi newsAPI;
     private LiveData<List<News>> mAllDataNews;
+    private static NewsRepository newsRepository;
 
     public NewsRepository() {
         newsAPI =  RetrofitService.createService(JsonPlaceHolderApi.class);
+    }
+
+    public static NewsRepository getInstance(){
+        if ( newsRepository == null){
+            newsRepository = new NewsRepository();
+        }
+        return newsRepository;
     }
 
     public MutableLiveData<News> getAllNews(Map<String, String> source){
