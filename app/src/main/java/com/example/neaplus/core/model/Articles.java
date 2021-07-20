@@ -1,8 +1,8 @@
 package com.example.neaplus.core.model;
 
+import androidx.room.Entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 
 public class Articles {
     @SerializedName("source")
