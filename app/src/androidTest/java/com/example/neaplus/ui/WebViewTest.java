@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.allOf;
 public class WebViewTest {
 
     @Rule
-    public ActivityTestRule<SplashActivity> mActivityTestRule = new ActivityTestRule<>(SplashActivity.class);
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
     public void webViewTest() {
