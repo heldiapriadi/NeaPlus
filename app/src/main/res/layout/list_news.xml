@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/image_published"
+                android:id="@+id/rv_image_published"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="15dp"
@@ -31,18 +31,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_published"
+                android:id="@+id/rv_text_published"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:text="Published at"
-                app:layout_constraintStart_toEndOf="@+id/image_published"
+                app:layout_constraintStart_toEndOf="@+id/rv_image_published"
                 app:layout_constraintTop_toTopOf="parent"
                 android:textStyle="bold"/>
 
             <ImageView
-                android:id="@+id/image_berita"
+                android:id="@+id/rv_image_berita"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:layout_marginStart="15dp"
@@ -53,10 +53,10 @@
                 android:src="@drawable/load"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_published" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_image_published" />
 
             <TextView
-                android:id="@+id/text_title"
+                android:id="@+id/rv_text_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -68,20 +68,20 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_berita" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_image_berita" />
 
             <TextView
-                android:id="@+id/text_publisher"
+                android:id="@+id/rv_text_publisher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:text="TextView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_title" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_text_title" />
 
             <ImageView
-                android:id="@+id/image_share"
+                android:id="@+id/rv_image_share"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
@@ -90,8 +90,9 @@
                 android:src="@drawable/ic_baseline_share_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_title"
-                android:tint="@color/black"/>
+                app:layout_constraintTop_toBottomOf="@+id/rv_text_title"
+                app:tint="@color/black" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

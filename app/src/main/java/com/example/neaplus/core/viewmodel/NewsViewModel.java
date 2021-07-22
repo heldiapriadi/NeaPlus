@@ -32,7 +32,7 @@ public class NewsViewModel extends ViewModel {
         }
         parameters.clear();
         mRepository = NewsRepository.getInstance();
-        parameters.put("apiKey", "8d075792b61a4fbbb90ef96a27a72483");
+        parameters.put("apiKey", "ff09885ea62f4f07853cb47cf5c3529e");
     }
 
     public LiveData<String> getText() {

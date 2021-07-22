@@ -19,7 +19,7 @@ public interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Article article);
 
-    @Query("DELETE FROM Article")
+    @Query("DELETE FROM article")
     void deleteAll();
 
     @Delete
