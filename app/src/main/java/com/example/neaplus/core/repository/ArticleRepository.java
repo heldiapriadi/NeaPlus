@@ -13,7 +13,6 @@ import java.util.List;
 public class ArticleRepository {
     private ArticleDao articleDao;
     private LiveData<List<Article>> mAllArticle;
-    private String title;
 
     public ArticleRepository(Application application) {
         NeaDatabase db = NeaDatabase.getDatabase(application);
@@ -31,10 +30,8 @@ public class ArticleRepository {
         });
     }
 
-    public void deleteAll() {
-        NeaDatabase.databaseWriteExecutor.execute(() -> {
-            articleDao.deleteAll();
-        });
+    public LiveData<List<String>> getArticle(String url){
+        return articleDao.getArticle(url);
     }
 
     public void delete(Article article) {
@@ -43,7 +40,9 @@ public class ArticleRepository {
         });
     }
 
-   public LiveData<List<String>> getArticle(String url){
-        return articleDao.getArticle(url);
-   }
+    public void deleteAll() {
+        NeaDatabase.databaseWriteExecutor.execute(() -> {
+            articleDao.deleteAll();
+        });
+    }
 }

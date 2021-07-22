@@ -9,8 +9,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
+            <option value="/media/storage/Users/Bryan/Documents/Project/Programming/AndroidStudio/NeaPlus" />
+            <option value="/media/storage/Users/Bryan/Documents/Project/Programming/AndroidStudio/NeaPlus/app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
