@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.example.neaplus.core.usecase.NewsViewModel;
+import com.example.neaplus.core.viewmodel.NewsViewModel;
 import com.example.neaplus.databinding.FragmentHomeBinding;
 import com.example.neaplus.core.model.Articles;
 
