@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-
     private FragmentHomeBinding binding;
     private ImageView imageSearch;
     private NewsViewModel newsViewModel;

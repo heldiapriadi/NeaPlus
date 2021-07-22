@@ -23,7 +23,6 @@ import com.example.neaplus.databinding.FragmentBookmarkBinding;
 import com.example.neaplus.ui.DetailActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BookmarkFragment extends Fragment {
     private RecyclerView rvArticles;
@@ -43,7 +42,7 @@ public class BookmarkFragment extends Fragment {
         binding = FragmentBookmarkBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         articleViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(ArticleViewModel.class);
-        getCountArticle = root.findViewById(R.id.textView3);
+        getCountArticle = root.findViewById(R.id.countArticle);
         rvArticles = root.findViewById(R.id.rv_articles);
         listArticle = ArticlesData.getListData();
 

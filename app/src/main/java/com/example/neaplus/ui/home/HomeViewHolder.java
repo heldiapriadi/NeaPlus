@@ -5,23 +5,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.neaplus.R;
 import com.squareup.picasso.Picasso;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 public class HomeViewHolder extends RecyclerView.ViewHolder {
     private final TextView publishedItemView;
@@ -32,11 +23,11 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
 
     public HomeViewHolder(View itemView) {
         super(itemView);
-        publishedItemView = (TextView) itemView.findViewById(R.id.text_published);
-        newsImageItemView = (ImageView) itemView.findViewById(R.id.image_berita);
-        titleItemView = (TextView) itemView.findViewById(R.id.text_title);
-        publisherItemView = (TextView) itemView.findViewById(R.id.text_publisher);
-        shareButtonItemView = (ImageView) itemView.findViewById(R.id.image_share);
+        publishedItemView = (TextView) itemView.findViewById(R.id.rv_text_published);
+        newsImageItemView = (ImageView) itemView.findViewById(R.id.rv_image_berita);
+        titleItemView = (TextView) itemView.findViewById(R.id.rv_text_title);
+        publisherItemView = (TextView) itemView.findViewById(R.id.rv_text_publisher);
+        shareButtonItemView = (ImageView) itemView.findViewById(R.id.rv_image_share);
         cardView = (CardView) itemView.findViewById(R.id.cardViewNews);
     }
 
