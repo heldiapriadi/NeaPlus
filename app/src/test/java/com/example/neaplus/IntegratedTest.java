@@ -31,7 +31,7 @@ public class IntegratedTest {
     @Before
     public void setUp() throws Exception{
         shadowOf(getMainLooper()).idle();
-        detailActivity = Robolectric.buildActivity(DetailActivity.class).create().get();
+        // detailActivity = Robolectric.buildActivity(DetailActivity.class).create().get();
         mainActivity = Robolectric.buildActivity(MainActivity.class).create().get();
         splashActivity = Robolectric.buildActivity(SplashActivity.class).create().get();
         webActivity = Robolectric.buildActivity(WebActivity.class).create().get();
@@ -39,7 +39,7 @@ public class IntegratedTest {
     }
     @Test
     public void testActivityShouldNotBeNull() throws Exception{
-        assertNotNull(detailActivity);
+        // assertNotNull(detailActivity);
         assertNotNull(mainActivity);
         assertNotNull(splashActivity);
         assertNotNull(webActivity);
