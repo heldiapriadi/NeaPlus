@@ -69,15 +69,6 @@ public class DisplayActivityFragmentTest {
         onView(withId(R.id.text_title)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void detailActivityBookmark(){
-        onView(withId(R.id.navigation_bookmark)).perform(click());
-
-
-        onView(withId(R.id.text_title)).check(matches(isDisplayed()));
-    }
-
-
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
 
