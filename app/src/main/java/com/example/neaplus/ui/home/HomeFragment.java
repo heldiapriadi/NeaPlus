@@ -100,6 +100,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String ct = parent.getItemAtPosition(position).toString();
+                country = ct;
                 newsViewModel.init();
                 loadNews(ct, category);
             }
